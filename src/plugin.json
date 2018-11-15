@@ -1,0 +1,28 @@
+{
+  "type": "panel",
+  "name": "Daniel Panel",
+  "id": "grafana-daniel-panel",
+  "info": {
+    "description": "Danniel panel for grafana",
+    "author": {
+      "name": "[author]",
+      "url": "[author email]"
+    },
+    "keywords": ["grafana", "panel"],
+    "logos": {
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
+    },
+    "links": [ ],
+    "screenshots": [
+      {"name": "Showcase 1", "path": "img/screenshot-showcase-1.png"},
+      {"name": "Options", "path": "img/screenshot-options.png"}
+     ],
+    "version": "0.0.1",
+    "updated": "[current date]"
+  },
+  "dependencies": {
+    "grafanaVersion": "5.3.x",
+    "plugins": [ ]
+  }
+}
