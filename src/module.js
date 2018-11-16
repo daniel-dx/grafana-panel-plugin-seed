@@ -16,8 +16,6 @@ class Ctrl extends MetricsPanelCtrl {
     super($scope, $injector);
     _.defaultsDeep(this.panel, panelDefaults);
 
-    this.$element = $element;
-
     this.debounceRenderGraph = _.debounce(this.renderGraph, 250);
 
     this.events.on('render', this.onRender.bind(this));
@@ -26,6 +24,10 @@ class Ctrl extends MetricsPanelCtrl {
   }
 
   link(scope, element) {
+
+    this.panelContentElm = element[0].querySelector('.panel-content');
+    this.panelGraphElm = element[0].querySelector('.daniel-panel');
+
     this.initStyles();
 
     // Some large scripts are loaded by dynamic loading
@@ -64,11 +66,10 @@ class Ctrl extends MetricsPanelCtrl {
    * @param {*} panelData
    */
   renderGraph(panelData) {
-    let containerElm = this.$element[0].querySelector('.daniel-panel');
-    containerElm.innerHTML = '';
+    this.panelGraphElm.innerHTML = '';
 
-    // Use containerElm to render graphics
-    containerElm.innerHTML = this.panel.msg;
+    // Use this.panelGraphElm to render graphics
+    this.panelGraphElm.innerHTML = this.panel.msg;
   }
 
   /**
