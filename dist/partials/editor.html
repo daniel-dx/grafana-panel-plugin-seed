@@ -35,5 +35,17 @@
       <input type="text" class="input-small gf-form-input max-width-6" ng-model="ctrl.panel.panelConfig.borderRadius"
         ng-change="ctrl.render()" ng-model-onblur />
     </div>
+    <div class="gf-form">
+      <gf-form-switch class="gf-form" label="Show Border" label-class="width-10" checked="ctrl.panel.panelConfig.showBorder"
+        on-change="ctrl.render()">
+      </gf-form-switch>
+    </div>
+    <div class="gf-form">
+      <label class="gf-form-label width-10">Border Color</label>
+      <span class="max-width-6">
+        <spectrum-picker class="gf-form-input" ng-model="ctrl.panel.panelConfig.borderColor" ng-change="ctrl.render()">
+        </spectrum-picker>
+      </span>
+    </div>
   </div>
 </div>

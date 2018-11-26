@@ -13,6 +13,8 @@ const panelDefaults = {
     headerColor: '',
     headerAlign: 'center',
     borderRadius: '',
+    showBorder: true,
+    borderColor: '',
     contentBgColor: ''
   }
 };
@@ -28,7 +30,7 @@ class Ctrl extends MetricsPanelCtrl {
     this.events.on('render', this.onRender.bind(this));
     this.events.on('data-received', this.onDataReceived.bind(this));
     this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
-    
+
   }
 
   link(scope, element) {
@@ -86,6 +88,13 @@ class Ctrl extends MetricsPanelCtrl {
     }
     if (this.panel.panelConfig.borderRadius)
       this.panelContainerElm.style.borderRadius = this.panel.panelConfig.borderRadius;
+    if (!this.panel.panelConfig.showBorder) {
+      this.panelContainerElm.classList.add('no-panel-border');
+    } else {
+      this.panelContainerElm.classList.remove('no-panel-border');
+    }
+    if (this.panel.panelConfig.borderColor)
+      this.panelContainerElm.style.borderColor = this.panel.panelConfig.borderColor;
     this.panelTitleElm.querySelector('.panel-title').style.justifyContent = this.panel.panelConfig.headerAlign;
 
     this.panelTitleElm.querySelector('.panel-title').style.padding = '4px 8px'; // 用于让标题居左时有padding

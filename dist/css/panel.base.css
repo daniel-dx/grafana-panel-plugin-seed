@@ -2,6 +2,9 @@ panel-plugin-grafana-daniel-panel .daniel-panel {
   font-size: 14pt;
   height: 100%; }
 
+panel-plugin-grafana-daniel-panel .no-panel-border {
+  border: none; }
+
 panel-plugin-grafana-daniel-panel .panel-title-text:hover {
   color: inherit !important;
   filter: brightness(50%); }
