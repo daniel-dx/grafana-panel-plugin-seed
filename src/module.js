@@ -8,23 +8,33 @@ import './css/panel.light.scss';
 // Remove up to here
 
 const panelDefaults = {
-  msg: 'hi'
+  panelConfig: {
+    headerBgColor: '',
+    headerColor: '',
+    headerAlign: 'center',
+    borderRadius: '',
+    contentBgColor: ''
+  }
 };
 
 class Ctrl extends MetricsPanelCtrl {
-  constructor($scope, $injector, $element) {
+  constructor($scope, $injector) {
     super($scope, $injector);
     _.defaultsDeep(this.panel, panelDefaults);
 
     this.debounceRenderGraph = _.debounce(this.renderGraph, 250);
+    this.debounceRenderPanel = _.debounce(this.renderPanel, 250);
 
     this.events.on('render', this.onRender.bind(this));
     this.events.on('data-received', this.onDataReceived.bind(this));
     this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
+    
   }
 
   link(scope, element) {
 
+    this.panelContainerElm = element[0].querySelector('.panel-container');
+    this.panelTitleElm = element[0].querySelector('.panel-header');
     this.panelContentElm = element[0].querySelector('.panel-content');
     this.panelGraphElm = element[0].querySelector('.daniel-panel');
 
@@ -54,11 +64,32 @@ class Ctrl extends MetricsPanelCtrl {
 
   onRender() {
     if (this.panelData) this.debounceRenderGraph(this.panelData);
+    this.debounceRenderPanel();
   }
 
   onDataReceived(data) {
     this.panelData = this.handelPanelData(data);
     this.render();
+  }
+
+  /**
+   * Render panel
+   */
+  renderPanel() {
+    if (this.panel.panelConfig.contentBgColor)
+      this.panelContentElm.style.backgroundColor = this.panel.panelConfig.contentBgColor;
+    if (this.panel.panelConfig.headerBgColor)
+      this.panelTitleElm.style.backgroundColor = this.panel.panelConfig.headerBgColor;
+    if (this.panel.panelConfig.headerColor) {
+      this.panelTitleElm.style.color = this.panel.panelConfig.headerColor;
+      this.panelTitleElm.style.color = this.panel.panelConfig.headerColor;
+    }
+    if (this.panel.panelConfig.borderRadius)
+      this.panelContainerElm.style.borderRadius = this.panel.panelConfig.borderRadius;
+    this.panelTitleElm.querySelector('.panel-title').style.justifyContent = this.panel.panelConfig.headerAlign;
+
+    this.panelTitleElm.querySelector('.panel-title').style.padding = '4px 8px'; // 用于让标题居左时有padding
+    this.panelContainerElm.style.overflow = 'hidden'; // 用于让borderRadius显示效果生效
   }
 
   /**
@@ -69,7 +100,6 @@ class Ctrl extends MetricsPanelCtrl {
     this.panelGraphElm.innerHTML = '';
 
     // Use this.panelGraphElm to render graphics
-    this.panelGraphElm.innerHTML = this.panel.msg;
   }
 
   /**

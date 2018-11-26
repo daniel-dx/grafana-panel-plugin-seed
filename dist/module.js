@@ -1,4 +1,4 @@
-define(["lodash","app/plugins/sdk"], function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_1__) { return /******/ (function(modules) { // webpackBootstrap
+define(["app/plugins/sdk","lodash"], function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) { return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -103,32 +103,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // Remove up to here
 
 var panelDefaults = {
-  msg: 'hi'
+  panelConfig: {
+    headerBgColor: '',
+    headerColor: '',
+    headerAlign: 'center',
+    borderRadius: '',
+    contentBgColor: ''
+  }
 };
 
 var Ctrl = function (_MetricsPanelCtrl) {
   _inherits(Ctrl, _MetricsPanelCtrl);
 
-  function Ctrl($scope, $injector, $element) {
+  function Ctrl($scope, $injector) {
     _classCallCheck(this, Ctrl);
 
     var _this = _possibleConstructorReturn(this, (Ctrl.__proto__ || Object.getPrototypeOf(Ctrl)).call(this, $scope, $injector));
 
     _lodash2.default.defaultsDeep(_this.panel, panelDefaults);
 
-    _this.$element = $element;
-
     _this.debounceRenderGraph = _lodash2.default.debounce(_this.renderGraph, 250);
+    _this.debounceRenderPanel = _lodash2.default.debounce(_this.renderPanel, 250);
 
     _this.events.on('render', _this.onRender.bind(_this));
     _this.events.on('data-received', _this.onDataReceived.bind(_this));
     _this.events.on('init-edit-mode', _this.onInitEditMode.bind(_this));
+
     return _this;
   }
 
   _createClass(Ctrl, [{
     key: 'link',
     value: function link(scope, element) {
+
+      this.panelContainerElm = element[0].querySelector('.panel-container');
+      this.panelTitleElm = element[0].querySelector('.panel-header');
+      this.panelContentElm = element[0].querySelector('.panel-content');
+      this.panelGraphElm = element[0].querySelector('.daniel-panel');
+
       this.initStyles();
 
       // Some large scripts are loaded by dynamic loading
@@ -158,12 +170,33 @@ var Ctrl = function (_MetricsPanelCtrl) {
     key: 'onRender',
     value: function onRender() {
       if (this.panelData) this.debounceRenderGraph(this.panelData);
+      this.debounceRenderPanel();
     }
   }, {
     key: 'onDataReceived',
     value: function onDataReceived(data) {
       this.panelData = this.handelPanelData(data);
       this.render();
+    }
+
+    /**
+     * Render panel
+     */
+
+  }, {
+    key: 'renderPanel',
+    value: function renderPanel() {
+      if (this.panel.panelConfig.contentBgColor) this.panelContentElm.style.backgroundColor = this.panel.panelConfig.contentBgColor;
+      if (this.panel.panelConfig.headerBgColor) this.panelTitleElm.style.backgroundColor = this.panel.panelConfig.headerBgColor;
+      if (this.panel.panelConfig.headerColor) {
+        this.panelTitleElm.style.color = this.panel.panelConfig.headerColor;
+        this.panelTitleElm.style.color = this.panel.panelConfig.headerColor;
+      }
+      if (this.panel.panelConfig.borderRadius) this.panelContainerElm.style.borderRadius = this.panel.panelConfig.borderRadius;
+      this.panelTitleElm.querySelector('.panel-title').style.justifyContent = this.panel.panelConfig.headerAlign;
+
+      this.panelTitleElm.querySelector('.panel-title').style.padding = '4px 8px'; // 用于让标题居左时有padding
+      this.panelContainerElm.style.overflow = 'hidden'; // 用于让borderRadius显示效果生效
     }
 
     /**
@@ -174,11 +207,9 @@ var Ctrl = function (_MetricsPanelCtrl) {
   }, {
     key: 'renderGraph',
     value: function renderGraph(panelData) {
-      var containerElm = this.$element[0].querySelector('.daniel-panel');
-      containerElm.innerHTML = '';
+      this.panelGraphElm.innerHTML = '';
 
-      // Use containerElm to render graphics
-      containerElm.innerHTML = this.panel.msg;
+      // Use this.panelGraphElm to render graphics
     }
 
     /**

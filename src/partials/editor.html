@@ -1,14 +1,39 @@
 <div class="editor-row">
   <div class="section gf-form-group">
+    <h5 class="section-heading">Panel</h5>
     <div class="gf-form">
-      <label class="gf-form-label width-9">Message</label>
-      <input
-        type="text"
-        class="input-small gf-form-input max-width-10"
-        ng-model="ctrl.panel.msg"
-        ng-change="ctrl.render()"
-        ng-model-onblur
-      />
+      <label class="gf-form-label width-10">Header Background</label>
+      <span class="max-width-6">
+        <spectrum-picker class="gf-form-input" ng-model="ctrl.panel.panelConfig.headerBgColor" ng-change="ctrl.render()">
+        </spectrum-picker>
+      </span>
+    </div>
+    <div class="gf-form">
+      <label class="gf-form-label width-10">Header Color</label>
+      <span class="max-width-6">
+        <spectrum-picker class="gf-form-input" ng-model="ctrl.panel.panelConfig.headerColor" ng-change="ctrl.render()">
+        </spectrum-picker>
+      </span>
+    </div>
+    <div class="gf-form">
+      <label class="gf-form-label width-10">Header Align</label>
+      <span class="gf-form-select-wrapper max-width-6">
+        <select class="input-small gf-form-input" ng-model="ctrl.panel.panelConfig.headerAlign" ng-options="t for t in ['left', 'center']"
+          ng-change="ctrl.render()">
+        </select>
+      </span>
+    </div>
+    <div class="gf-form">
+      <label class="gf-form-label width-10">Content Background</label>
+      <span class="max-width-6">
+        <spectrum-picker class="gf-form-input" ng-model="ctrl.panel.panelConfig.contentBgColor" ng-change="ctrl.render()">
+        </spectrum-picker>
+      </span>
+    </div>
+    <div class="gf-form">
+      <label class="gf-form-label width-10">Border Radius</label>
+      <input type="text" class="input-small gf-form-input max-width-6" ng-model="ctrl.panel.panelConfig.borderRadius"
+        ng-change="ctrl.render()" ng-model-onblur />
     </div>
   </div>
 </div>

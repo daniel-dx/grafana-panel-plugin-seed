@@ -5,8 +5,8 @@
   "info": {
     "description": "Danniel panel for grafana",
     "author": {
-      "name": "[author]",
-      "url": "[author email]"
+      "name": "[author name]",
+      "url": "xxx@xxx.com"
     },
     "keywords": ["grafana", "panel"],
     "logos": {

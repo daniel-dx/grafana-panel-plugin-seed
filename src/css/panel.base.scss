@@ -3,4 +3,8 @@ panel-plugin-grafana-daniel-panel {
     font-size: 14pt;
     height: 100%;
   }
+  .panel-title-text:hover {
+    color: inherit !important;
+    filter: brightness(50%);
+  }
 }
