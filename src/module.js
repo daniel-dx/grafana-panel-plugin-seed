@@ -41,6 +41,7 @@ class Ctrl extends MetricsPanelCtrl {
     this.panelGraphElm = element[0].querySelector('.daniel-panel');
 
     this.initStyles();
+    this.debounceRenderPanel();
 
     // Some large scripts are loaded by dynamic loading
     this.importLargeModules();
