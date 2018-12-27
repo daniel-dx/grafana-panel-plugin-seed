@@ -130,7 +130,7 @@ var Ctrl = function (_MetricsPanelCtrl) {
     _this.events.on('render', _this.onRender.bind(_this));
     _this.events.on('data-received', _this.onDataReceived.bind(_this));
     _this.events.on('init-edit-mode', _this.onInitEditMode.bind(_this));
-
+    _this.events.on('data-snapshot-load', _this.onDataReceived.bind(_this));
     return _this;
   }
 
@@ -216,9 +216,16 @@ var Ctrl = function (_MetricsPanelCtrl) {
   }, {
     key: 'renderGraph',
     value: function renderGraph(panelData) {
+      var _this2 = this;
+
       this.panelGraphElm.innerHTML = '';
 
       // Use this.panelGraphElm to render graphics
+
+      // Notify phantomjs rendering completed in snapshot mode
+      setTimeout(function () {
+        _this2.renderingCompleted();
+      }, 500);
     }
 
     /**

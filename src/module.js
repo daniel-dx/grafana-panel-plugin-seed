@@ -30,7 +30,7 @@ class Ctrl extends MetricsPanelCtrl {
     this.events.on('render', this.onRender.bind(this));
     this.events.on('data-received', this.onDataReceived.bind(this));
     this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
-
+    this.events.on('data-snapshot-load', this.onDataReceived.bind(this));
   }
 
   link(scope, element) {
@@ -110,6 +110,11 @@ class Ctrl extends MetricsPanelCtrl {
     this.panelGraphElm.innerHTML = '';
 
     // Use this.panelGraphElm to render graphics
+
+    // Notify phantomjs rendering completed in snapshot mode
+    setTimeout(() => {
+      this.renderingCompleted();
+    }, 500)
   }
 
   /**
